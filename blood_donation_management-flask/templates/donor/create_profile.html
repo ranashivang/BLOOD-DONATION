@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Create Donor Profile</h2>
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.blood_type.label(class="form-label") }}
+                        {{ form.blood_type(class="form-select" + (" is-invalid" if form.blood_type.errors else "")) }}
+                        {% for error in form.blood_type.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.last_donation.label(class="form-label") }}
+                        {{ form.last_donation(class="form-control" + (" is-invalid" if form.last_donation.errors else ""), type="date") }}
+                        {% for error in form.last_donation.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.medical_conditions.label(class="form-label") }}
+                        {{ form.medical_conditions(class="form-control" + (" is-invalid" if form.medical_conditions.errors else "")) }}
+                        {% for error in form.medical_conditions.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                        <div class="form-text">List any medical conditions that might affect blood donation</div>
+                    </div>
+
+                    <!-- New Location Fields -->
+                    <div class="mb-3">
+                        {{ form.address.label(class="form-label") }}
+                        {{ form.address(class="form-control" + (" is-invalid" if form.address.errors else "")) }}
+                        {% for error in form.address.errors %}
+                            <div class="invalid-feedback">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            {{ form.city.label(class="form-label") }}
+                            {{ form.city(class="form-control" + (" is-invalid" if form.city.errors else "")) }}
+                            {% for error in form.city.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form.state.label(class="form-label") }}
+                            {{ form.state(class="form-control" + (" is-invalid" if form.state.errors else "")) }}
+                            {% for error in form.state.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form.zip_code.label(class="form-label") }}
+                            {{ form.zip_code(class="form-control" + (" is-invalid" if form.zip_code.errors else "")) }}
+                            {% for error in form.zip_code.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            {{ form.agree_to_terms(class="form-check-input" + (" is-invalid" if form.agree_to_terms.errors else "")) }}
+                            {{ form.agree_to_terms.label(class="form-check-label") }}
+                            {% for error in form.agree_to_terms.errors %}
+                                <div class="invalid-feedback">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-danger">Create Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

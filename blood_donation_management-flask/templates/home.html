@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="px-4 py-5 my-5 text-center">
+    <h1 class="display-5 fw-bold text-danger mb-4">
+        <i class="bi bi-heart-pulse"></i> Save Lives Through Blood Donation
+    </h1>
+    <div class="col-lg-6 mx-auto">
+        <p class="lead mb-4">
+            Join our community of blood donors and help save lives. Whether you're a donor or in need of blood, 
+            we're here to facilitate the connection.
+        </p>
+        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('register') }}" class="btn btn-danger btn-lg px-4 gap-3">Register Now</a>
+                <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg px-4">Login</a>
+            {% elif current_user.role == 'donor' %}
+                <a href="{{ url_for('schedule_donation') }}" class="btn btn-danger btn-lg px-4 gap-3">Donate Now</a>
+                <a href="{{ url_for('donor_dashboard') }}" class="btn btn-outline-light btn-lg px-4">View Dashboard</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Current Blood Inventory</h2>
+    <div class="row">
+        {% for item in inventory %}
+            <div class="col-md-3 mb-4">
+                <div class="card bg-dark h-100">
+                    <div class="card-body text-center">
+                        <h3 class="card-title display-4 text-danger">{{ item.blood_type }}</h3>
+                        <p class="card-text">Available: {{ item.quantity_ml }} ml</p>
+                        <div class="progress mt-3" style="height: 10px;">
+                            <div class="progress-bar bg-danger" role="progressbar" 
+                                 style="width: {{ (item.quantity_ml / 5000) * 100 }}%" 
+                                 aria-valuenow="{{ item.quantity_ml }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="5000"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div class="container py-5">
+    <h2 class="text-center mb-4">Learn About Blood Donation</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card bg-dark h-100">
+                <div class="card-body">
+                    <h3 class="card-title text-danger">Why Donate Blood?</h3>
+                    <p class="card-text">
+                        Your blood donation can help:
+                        <ul>
+                            <li>Accident and burn victims</li>
+                            <li>Heart surgery patients</li>
+                            <li>Cancer patients</li>
+                            <li>Organ transplant recipients</li>
+                        </ul>
+                    </p>
+                    <a href="{{ url_for('learn_about_donation') }}" class="btn btn-outline-danger">Learn More</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card bg-dark h-100">
+                <div class="card-body">
+                    <h3 class="card-title text-danger">Donation Process</h3>
+                    <p class="card-text">
+                        The donation process is safe and simple:
+                        <ul>
+                            <li>Registration and health history</li>
+                            <li>Quick physical examination</li>
+                            <li>The actual donation (about 10-15 minutes)</li>
+                            <li>Refreshments and recovery</li>
+                        </ul>
+                    </p>
+                    <a href="{{ url_for('donation_process') }}" class="btn btn-outline-danger">See Details</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
